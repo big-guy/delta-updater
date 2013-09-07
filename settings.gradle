@@ -1,0 +1,5 @@
+include 'delta-diff'
+include 'delta-common'
+include 'delta-patch'
+
+rootProject.name = 'delta-updater'

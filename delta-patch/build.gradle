@@ -1,0 +1,12 @@
+dependencies {
+   compile 'com.nothome:javaxdelta:2.0.1'
+   compile 'com.google.guava:guava:10.0'
+   compile 'commons-lang:commons-lang:2.1'
+   compile 'commons-io:commons-io:2.1'
+   compile 'commons-cli:commons-cli:1.2'
+   compile 'com.google.code.gson:gson:2.1'
+
+   compile project(':delta-common')
+
+   testCompile 'junit:junit:4.8.1'
+}

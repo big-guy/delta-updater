@@ -1,0 +1,5 @@
+dependencies {
+   compile 'com.google.guava:guava:10.0'
+   compile 'commons-lang:commons-lang:2.1'
+   compile 'commons-io:commons-io:2.1'
+}

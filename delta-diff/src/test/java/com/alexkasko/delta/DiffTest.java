@@ -1,7 +1,9 @@
 package com.alexkasko.delta;
 
 import com.alexkasko.delta.DirDeltaCreator;
+
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.vfs2.AllFileSelector;
 import org.junit.Test;
 
 import java.io.*;
@@ -43,7 +45,7 @@ public class DiffTest {
             writeStringToFile(new File(target, "updated"), "ba42", "UTF-8");
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             // create diff
-            new DirDeltaCreator().create(source, target, TRUE, baos);
+            new DirDeltaCreator().create(source.getAbsolutePath(), target.getAbsolutePath(), baos);
             // read diff as zip
             byte[] delta = baos.toByteArray();
             ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(delta));

@@ -1,10 +1,17 @@
 package com.alexkasko.delta;
 
-import org.apache.commons.cli.*;
+import static java.lang.System.out;
 
 import java.io.File;
+import java.io.OutputStream;
 
-import static java.lang.System.out;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * Delta diff launcher class
@@ -29,7 +36,13 @@ public class DiffLauncher {
             if (cline.hasOption(HELP_OPTION)) {
                 throw new ParseException("Printing help page:");
             } else if(2 == argList.length && cline.hasOption(OUTPUT_OPTION)) {
-                new DirDeltaCreator().create(new File(argList[0]), new File(argList[1]), new File(cline.getOptionValue(OUTPUT_OPTION)));
+            	OutputStream out = null;
+                try {
+                    out = FileUtils.openOutputStream(new File(cline.getOptionValue(OUTPUT_OPTION)));
+                    new DirDeltaCreator().create(argList[0], argList[1], out);
+                } finally {
+                    IOUtils.closeQuietly(out);
+                }
             } else {
                 throw new ParseException("Incorrect arguments received!");
             }

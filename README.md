@@ -97,6 +97,10 @@ This project is released under the [MIT License](http://www.opensource.org/licen
 Changelog
 ---------
 
+**?.?** (2013-09-08) 
+
+ * modified delta-diff to use Apache Commons VFS to support diffs between directories and zip files
+
 **1.1** (2012-10-26)
 
  * code and dependencies cleanup, maven central upload

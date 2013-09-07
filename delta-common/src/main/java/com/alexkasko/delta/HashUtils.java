@@ -1,11 +1,13 @@
 package com.alexkasko.delta;
 
 import com.google.common.io.NullOutputStream;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.UnhandledException;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
@@ -20,8 +22,18 @@ import java.security.NoSuchAlgorithmException;
 class HashUtils {
     static String computeSha1(File file) {
         InputStream is = null;
-        try {
-            is = new FileInputStream(file);
+		try {
+			is = new FileInputStream(file);
+	        return computeSha1(is);
+		} catch (FileNotFoundException e) {
+			throw new UnhandledException(e);
+		} finally {
+            IOUtils.closeQuietly(is);
+		}
+    }
+
+	static String computeSha1(InputStream is) {
+		try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
             DigestInputStream dis = new DigestInputStream(is, md);
             IOUtils.copyLarge(dis, new NullOutputStream());
@@ -32,10 +44,8 @@ class HashUtils {
             throw new UnhandledException(e);
         } catch (IOException e) {
             throw new UnhandledException(e);
-        } finally {
-            IOUtils.closeQuietly(is);
         }
-    }
+	}
 
     //  http://stackoverflow.com/a/3940857/314015
     static String hex(byte[] data) {

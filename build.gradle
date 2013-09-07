@@ -9,3 +9,16 @@ allprojects {
 subprojects {
    apply plugin: 'eclipse'
 }
+
+// builds fatjar with all dependencies embedded in it
+project(':') {
+   dependencies {
+      compile(project(':delta-patch'))
+      compile(project(':delta-diff'))
+   }
+   jar {
+      from {
+         configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } 
+      }
+   }
+}
